@@ -12,13 +12,15 @@
 
 # Methods -----------------------------------------------------------------
 
-
+#Pulling in my data: Botswana Cancer Cohort
 library(readxl)
 final_project_BCC <- read_excel("final_project.BCC.xls")
 View(final_project_BCC)
 str(final_project_BCC)
 head(final_project_BCC)
 library(tidyverse)
+
+#select variables from dataset
 final_project<-final_project_BCC %>%
   select(record_id, enrollment_site, gender, smoker, seeing_natural_healer, height_cm, weight_kg, age, yearofvisit, yearofdeath, stage_high, stage_new, hiv, dead, assume_dead, marital_status)
 str(final_project)
@@ -27,8 +29,13 @@ table<- final_project %>%
 library(knitr)
 library(kableExtra)
 options(knitr.kable.NA='')
+
+#data summary
 kable(summary(table))
 library(ggplot2)
+
+#graphs of variables to be used in the analysis
+#histogram of age
 ggplot(data=final_project, aes(x=age)) +
   geom_histogram(binwidth=3) +
   ggtitle(paste("Patinets age distribution")) + 
@@ -36,6 +43,7 @@ ggplot(data=final_project, aes(x=age)) +
     text=element_text(family="Palatino"),
     plot.title=element_text(hjust=0, face="bold", size=20))
 
+#bar graph of marital status
 ggplot(data=final_project, aes(x=marital_status)) +
   geom_bar() +
   ggtitle(paste("Patient's marital status")) + 
@@ -43,6 +51,7 @@ ggplot(data=final_project, aes(x=marital_status)) +
     text=element_text(family="Palatino"),
     plot.title=element_text(hjust=0, face="bold", size=20))
 
+#bar graph of year of visit
 #total<-na.exclude(final_project)
 ggplot(data=final_project, aes(x=yearofvisit)) +
   geom_bar() +
@@ -51,6 +60,8 @@ ggplot(data=final_project, aes(x=yearofvisit)) +
     text=element_text(family="Palatino"),
     plot.title=element_text(hjust=0, face="bold", size=20))
 #need fill to be a characrter not a number
+
+#histogram of HIV
 ggplot(data=final_project, aes(x=age, fill=hiv)) +
   geom_histogram(binwidth=3) +
   scale_fill_manual(values=c("gray40", "gray90")) +
